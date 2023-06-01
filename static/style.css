@@ -1,0 +1,68 @@
+
+body {
+    background: linear-gradient(#6699ff, #ffb3ff);
+    background-repeat: no-repeat;
+    height: auto;
+    display: grid;
+    grid-template-columns: repeat(6,1fr);
+    
+    
+    align-content: center;
+    text-align: center;
+    font-size:1.5em;
+    justify-content: center;
+}
+.heading {
+    
+    grid-row: 1/2;
+    grid-column: 1/7;
+    font-size: 3rem;
+    transition:  1s;
+}
+.heading:hover{
+    font-size: 4rem;
+    color: rgb(000,000, 000,0.6);
+}
+.navbar{
+    grid-row: 2/3;
+    text-align: center;
+    grid-column: 1/7;
+}
+
+.Table{
+    grid-row: 3/4;
+    
+    border: black solid 2px;
+    border-radius: 5px;
+    grid-column:1/7;
+    background-color: rgb(255, 255, 255, 0.5);
+    margin: 3rem auto;
+    width: auto;
+    border-collapse: collapse;
+    
+}
+td{
+    border: solid black 1px;
+    padding: 0.5rem 3rem;   
+}
+tr:nth-child(2n){
+    background-color: rgb(196, 196, 196);
+}
+a{
+    text-decoration: none;
+    font-size: 1.5rem;
+    transition:  .5s;
+    color: blue;
+}
+a:hover{
+    font-size: 1.6rem;
+    color: #cc33ff;
+}
+.signuplink{
+    grid-row: 3/4;
+    grid-column: 1/4;
+}
+.loginlink{
+    grid-row: 3/4;
+    grid-column: 4/7;
+}

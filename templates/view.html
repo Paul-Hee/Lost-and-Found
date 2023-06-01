@@ -1,0 +1,27 @@
+{% extends "_layout.html" %}
+{% block content %}
+<h1 class="heading">Hello Pakuranga</h1>
+<table class="Table">
+    
+    <tr>
+        <th> ID </th>
+        <th> Image </th>
+        <th> First name </th>
+        <th> Last name</th>
+        <th> Email </th>
+       
+    </tr>
+    <tr>
+        <td>{{ result['id']}}</td>
+        <td><img src="{{ result['image']}}" height="25rem"></td>
+        <td>{{ result['first_name']}}</td>
+        <td>{{ result['last_name']}}</td>
+        <td><a href="mailto:{{ result['email']}}"> {{ result['email']}}</a></td>
+    </tr>
+
+</table>
+<a href="/" class="homelink"> Home page</a>
+<a href="/update?id={{ result['id']}}">Edit</a>
+
+
+{% endblock %}

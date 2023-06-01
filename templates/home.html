@@ -1,0 +1,34 @@
+{% extends "_layout.html" %}
+{% block content %}
+<h1 class="heading">Hello Pakuranga</h1>
+<table class="Table">
+    <colgroup>
+        <col>
+        <col>
+        <col>
+    </colgroup>
+    <tr>
+        <th> Profile Picture</th>
+        <th> First name </th>
+        <th> Last name</th>
+        <th> Email </th>
+        <th> Actions</th>
+    </tr>
+{% for row in result %}
+    <tr>
+        
+        <td><img src="{{row["image"] }}" height="25rem"></td>
+        <td>{{row["first_name"] }}</td>
+        <td>{{row["last_name"] }}</td>
+        <td><a href="mailto:{{row["email"] }}"> {{ row["email"] }}</a></td>
+    <td> <a href="/delete?id={{ row['id']}}" onclick="return confirm('are you sure you want to delete {{row["first_name"] }}?')">Delete</a>
+        <a href="/update?id={{ row['id']}}">Edit</a>
+        <a href="/view?id={{ row['id']}}"> View</a>
+    </td>
+    </tr>
+{% endfor %}
+</table>
+
+
+
+{% endblock %}
