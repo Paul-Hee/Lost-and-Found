@@ -11,7 +11,7 @@
 <body>
     <nav class="navbar">
         {% if session["logged_in"] %}
-            You are logged in!
+            You are logged in! {{ session['first_name'] + ' ' + session['last_name']}}
             <a href="/logout">Log out</a>
         {% else %}
             You are not logged in.

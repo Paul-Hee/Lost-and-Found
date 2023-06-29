@@ -21,19 +21,46 @@ def create_connection():
         # host="localhost",
         # user="root",
         password="ALTAR",
-        db="pauhe_test",
+        db="pauhe_lost&found",
         charset="utf8mb4",
         cursorclass=pymysql.cursors.DictCursor
     )
 
 @app.route("/")
 def home():
-    with create_connection() as connection:
-        with connection.cursor() as cursor:
-            sql = "SELECT * FROM users"
-            cursor.execute(sql)
-            result = cursor.fetchall()
-    return render_template("home.html", result=result)
+    
+    return render_template("home.html")
+
+@app.route("/user")
+def user():
+    
+    if not "logged_in" in session:
+        flash("You are not logged in")
+        return redirect("/")    
+    if 'admin' in session["role"]:
+        with create_connection() as connection:
+            with connection.cursor() as cursor:
+                sql = "SELECT * FROM users"
+                cursor.execute(sql)
+                result = cursor.fetchall()
+                print(result)
+        return render_template("user.html", result=result)
+    else:
+        
+        with create_connection() as connection:
+                return render_template("view.html",)
+    """
+    elif session["role"] == "user":
+        with create_connection() as connection:
+            with connection.cursor() as cursor:
+                sql = "SELECT * FROM users WHERE id = %s"
+                values = (
+                    request.args["id"]
+                    )
+                cursor.execute(sql, values)
+                result = cursor.fetchall()
+        return render_template("user.html", result=result)
+"""
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -51,6 +78,9 @@ def login():
             session["logged_in"] = True
             session["id"] = result["id"]
             session["first_name"] = result["first_name"]
+            session["last_name"] = result["last_name"]
+            session["profile"] = result["profile"]
+            session["email"] = result["email"]
             session["role"] = result["role"]
             return redirect("/")
         else:
@@ -70,23 +100,26 @@ def signup():
         with create_connection() as connection:
             with connection.cursor() as cursor:
 
-                image = request.files["image"]
-                ext = os.path.splitext(image.filename)[1]
-                image_path = "static/images/" + str(uuid.uuid4())[:8] + ext
-                image.save(image_path)
-    
+                profile = request.files["profile"]
+                if not profile:
+                    profile_path = "static/images/profile.png"
+                else:
+                    ext = os.path.splitext(profile.filename)[1]
+                    profile_path = "static/images/" + str(uuid.uuid4())[:8] + ext
+                    profile.save(profile_path)
+                    
                 password = request.form["password"]
                 encrypted_password = hashlib.sha256(password.encode()).hexdigest()
                 print(encrypted_password)
 
-                sql = """INSERT INTO users (first_name, last_name, email, password, image)
+                sql = """INSERT INTO users (first_name, last_name, email, password, profile)
                 VALUES (%s, %s, %s, %s, %s)"""
                 values = (
                     request.form["first_name"],
                     request.form["last_name"],
                     request.form["email"],
                     encrypted_password,
-                    image_path
+                    profile_path
                 )
                 cursor.execute(sql, values)
                 connection.commit()
@@ -106,7 +139,7 @@ def delete():
             values = (request.args["id"])
             cursor.execute(sql, values)
             connection.commit()
-    return redirect("/")
+    return redirect("/user")
 
 @app.route("/update", methods=["GET", "POST"])
 def update():
@@ -116,8 +149,8 @@ def update():
     if request.method == "POST":
         with create_connection() as connection:
             with connection.cursor() as cursor:
-
-                image = request.files["image"]
+                
+                profile = request.files["profile"]
                 
                 
                 password = request.form["password"]
@@ -126,19 +159,19 @@ def update():
                 else:
                     encrypted_password = request.form["old_password"]
 
-                if image: 
-                    ext = os.path.splitext(image.filename)[1]
-                    image_path = "static/images/" + str(uuid.uuid4())[:8] + ext
-                    image.save(image_path)
+                if profile: 
+                    ext = os.path.splitext(profile.filename)[1]
+                    profile_path = "static/images/" + str(uuid.uuid4())[:8] + ext
+                    profile.save(profile_path)
                 else:
-                    image_path = request.form["old_image"]
+                    profile_path = request.form["old_profile"]
 
                 sql = """UPDATE USERS SET
                     first_name = %s,
                     last_name = %s,
                     email = %s,
                     password = %s,
-                    image = %s
+                    profile = %s
                     WHERE id = %s
                 """
                 values = ( 
@@ -146,7 +179,7 @@ def update():
                     request.form['last_name'],
                     request.form['email'],
                     encrypted_password,
-                    image_path,
+                    profile_path,
                     request.form['id']
                     
                     )
@@ -181,23 +214,13 @@ def view():
     else:
         with create_connection() as connection:
             with connection.cursor() as cursor:
-                xianchong = request.args["id"]
-                if xianchong == 68:
-                    sql = "SELECT * FROM users WHERE id = 68"
-                    values = (
+                sql = "SELECT * FROM users WHERE id = %s"
+                values = (
                     request.args["id"]
                 )
-                    cursor.execute(sql, values)
-                    result1 = cursor.fetchone()
-                    return render_template("xianchong.html", result=result1)
-                else:
-                    sql = "SELECT * FROM users WHERE id = %s AND not id = 68"
-                    values = (
-                        request.args["id"]
-                    )
-                    cursor.execute(sql, values)
-                    result2 = cursor.fetchone()
-                    return render_template("view.html", result=result2)
+                cursor.execute(sql, values)
+                result = cursor.fetchone()
+                return render_template("view.html", result=result)
     
 
 

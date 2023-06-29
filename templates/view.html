@@ -12,16 +12,16 @@
        
     </tr>
     <tr>
-        <td>{{ result['id']}}</td>
-        <td><img src="{{ result['image']}}" height="25rem"></td>
-        <td>{{ result['first_name']}}</td>
-        <td>{{ result['last_name']}}</td>
-        <td><a href="mailto:{{ result['email']}}"> {{ result['email']}}</a></td>
+        
+        <td><img src="{{ session['profile']}}" height="25rem"></td>
+        <td>{{ session['first_name']}}</td>
+        <td>{{ session['last_name']}}</td>
+        <td><a href="mailto:{{ session['email']}}"> {{ session['email']}}</a></td>
     </tr>
 
 </table>
 <a href="/" class="homelink"> Home page</a>
-<a href="/update?id={{ result['id']}}">Edit</a>
+<a href="/update?id={{ session['id']}}">Edit</a>
 
 
 {% endblock %}

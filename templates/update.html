@@ -6,7 +6,7 @@
 <form method="POST" enctype="multipart/form-data">
     <input name="id" type="hidden" value="{{ result['id']}}">
     <input name="old_password" type="hidden" value="{{ result['password']}}">
-    <input name="old_image" type="hidden" value="{{ result['image']}}">
+    <input name="old_profile" type="hidden" value="{{ result['profile']}}">
 
     <br>
     
@@ -23,7 +23,7 @@
     <input name="password" type="password" value="{{ result['password']}}">
     <br>
     <label> Profile Picture</label>
-    <input name="image" type="file">
+    <input name="profile" type="file">
     <button type="submit">Update</button>
 </form>
 <a href="/" class="homelink"> Home page</a>
