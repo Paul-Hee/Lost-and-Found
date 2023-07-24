@@ -1,0 +1,25 @@
+{% extends "_layout.html" %}
+
+{% block content %}
+
+<h1> hi</h1>
+<form method="POST" enctype="multipart/form-data">
+    <input name="id" type="hidden" value="{{ result['id']}}">
+   
+    <input name="old_image" type="hidden" value="{{ result['image']}}">
+
+    <br>
+    <label> Image</label>
+    <input name="image" type="file">
+    <br>
+    <label> Header</label>
+    <input name="header" value="{{ result['header']}}">
+    <br>
+    <label> Description</label>
+    <input name="description" value="{{ result['description']}}">
+    <br>
+    
+    <button type="submit">Update</button>
+</form>
+<a href="/" class="homelink"> Home page</a>
+{% endblock %}

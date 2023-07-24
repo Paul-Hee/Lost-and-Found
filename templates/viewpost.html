@@ -1,0 +1,33 @@
+{% extends "_layout.html" %}
+{% block content %}
+<h1 class="heading">Hello Pakuranga</h1>
+<table class="Table">
+    
+    <tr>
+        
+        <th> Image </th>
+        <th>header</th>
+        <th>description</th>
+        
+        <th> First name </th>
+        <th> Last name</th>
+        <th> Email </th>
+       
+    </tr>
+    <tr>
+        <td><img src="{{ lost_result['image']}}" height="25rem"></td>
+        <td>{{ lost_result['header']}}</td>
+        <td>{{ lost_result['description']}}</td>
+        
+        <td>{{ lost_result['first_name']}}</td>
+        <td>{{ lost_result['last_name']}}</td>
+        <td><a href="mailto:{{ lost_result['email']}}"> {{ lost_result['email']}}</a></td>
+    </tr>
+
+</table>
+<a href="/" class="homelink"> Home page</a>
+<a href="/updatepost?id={{ lost_result['id']}}">Edit</a>
+<a href="/deletepost?id={{ lost_result['id'] }}" onclick="return confirm('Are you sure you want to delete {{ lost_result["header"] }}?')">Delete</a>
+
+
+{% endblock %}  

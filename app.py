@@ -25,6 +25,8 @@ def create_connection():
         charset="utf8mb4",
         cursorclass=pymysql.cursors.DictCursor
     )
+
+
 def can_access(id):
     if "logged_in" in session:
         matching_id = session["id"] == int(id)
@@ -33,6 +35,25 @@ def can_access(id):
         return matching_id or is_admin
     else:
         return False
+
+def can_accesslost(post_id, session_user_id):
+    with create_connection() as connection:
+        with connection.cursor() as cursor:
+            sql = """
+            SELECT userid FROM losts WHERE id = %s
+            """
+            cursor.execute(sql, (post_id,))
+            result = cursor.fetchone()
+
+            if not result:
+                return False  # The post doesn't exist
+
+            post_user_id = result["userid"]
+
+    is_admin = session.get("role") == "admin"
+    return session_user_id == post_user_id or is_admin
+
+
 
 
 @app.route("/")
@@ -209,8 +230,116 @@ def update():
                 result = cursor.fetchone()
         return render_template("update.html", result=result)
 
+#lost
 
+@app.route("/lost")
+def lost():
 
+    if not "logged_in" in session or 'user' in session["role"]:
+        with create_connection() as connection:
+            with connection.cursor() as cursor:
+                sql = """
+                SELECT losts.id, losts.image, losts.header, losts.description, users.first_name, users.last_name, users.email
+                FROM losts
+                INNER JOIN users ON losts.userid = users.id
+                """
+                cursor.execute(sql)
+                lost_results = cursor.fetchall()
+
+            return render_template("lost.html", lost_results=lost_results)
+
+    elif 'admin' in session["role"]:
+        with create_connection() as connection:
+            with connection.cursor() as cursor:
+                sql = """
+                SELECT losts.id, losts.image, losts.header, losts.description, users.first_name, users.last_name, users.email
+                FROM losts
+                INNER JOIN users ON losts.userid = users.id
+                """
+                cursor.execute(sql)
+                lost_results = cursor.fetchall()
+
+            return render_template("posts.html", lost_results=lost_results)
+    
+
+@app.route("/deletepost")
+def deletepost():
+    if not can_accesslost(request.args.get("id"), session.get("id")):
+        flash("You don't have permission to do that!")
+        return redirect("/")
+
+    with create_connection() as connection:
+        with connection.cursor() as cursor:
+            sql = "DELETE FROM losts WHERE id = %s"
+            values = (request.args["id"])
+            cursor.execute(sql, values) 
+            connection.commit()
+
+    return redirect("/lost")
+
+@app.route("/updatepost", methods=["GET", "POST"])
+def updatepost():
+    post_id = request.args.get("id")
+    session_user_id = session.get("id")
+
+    if not can_accesslost(post_id, session_user_id):
+        flash("You don't have permission to do that!")
+        return redirect("/")
+    if request.method == "POST":
+        with create_connection() as connection:
+            with connection.cursor() as cursor:
+                
+                image = request.files["image"]
+
+                if image: 
+                    ext = os.path.splitext(image.filename)[1]
+                    image_path = "static/images/" + str(uuid.uuid4())[:8] + ext
+                    image.save(image_path)
+                else:
+                    image_path = request.form["old_image"]
+
+                sql = """UPDATE LOSTS SET
+                    image = %s,
+                    header = %s,
+                    description = %s
+                    WHERE id = %s
+                """
+                values = ( 
+                    image_path,
+                    request.form['header'],
+                    request.form['description'],
+                    request.form['id']
+                    
+                    )
+                cursor.execute(sql, values)
+                connection.commit()
+        return redirect("/")
+    else:
+        with create_connection() as connection:
+            with connection.cursor() as cursor:
+                sql = "SELECT * FROM losts WHERE id = %s"
+                values = (request.args["id"])
+                cursor.execute(sql, values)
+                result = cursor.fetchone()
+        return render_template("updatepost.html", result=result)
+
+@app.route("/viewpost")
+def viewpost():
+    with create_connection() as connection:
+        with connection.cursor() as cursor:
+            sql1 = """
+            SELECT losts.id, losts.image, losts.header, losts.description, users.first_name, users.last_name, users.email 
+            FROM losts
+            INNER JOIN users ON losts.userid = users.id
+            WHERE losts.id = %(id)s
+            """
+            values1 = {
+                "id": request.args["id"]
+            }
+            cursor.execute(sql1, values1)
+            lost_result = cursor.fetchone()
+            
+            return render_template("viewpost.html", lost_result=lost_result)
 
 
 app.run(debug=True)

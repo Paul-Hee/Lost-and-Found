@@ -1,0 +1,40 @@
+{% extends "_layout.html" %}
+{% block content %}
+<h1 class="heading">Hello Pakuranga</h1>
+<table class="Table">
+    <colgroup>
+        <col>
+        <col>
+        <col>
+    </colgroup>
+    <tr>
+        <th>image</th>
+        <th>header</th>
+        <th>description</th>
+
+        <th> First name </th>
+        <th> Last name</th>
+        <th> Email </th>
+        <th> Actions</th>
+    </tr>
+{% for lost_row in lost_results %}
+    <tr class="lost">
+        <td>{{ lost_row["image"] }}</td>
+        <td>{{ lost_row["header"] }}</td>
+        <td>{{ lost_row["description"] }}</td>
+        <td>{{ lost_row["first_name"] }}</td>
+        <td>{{ lost_row["last_name"] }}</td>
+        <td><a href="mailto:{{ lost_row["email"] }}">{{ lost_row["email"] }}</a></td>
+        <td>
+            <a href="/deletepost?id={{ lost_row['id'] }}" onclick="return confirm('Are you sure you want to delete {{ lost_row["header"] }}?')">Delete</a>
+            <a href="/updatepost?id={{ lost_row['id'] }}">Edit</a>
+            <a href="/viewpost?id={{ lost_row['id'] }}">View</a>
+        </td>
+    </tr>
+{% endfor %}
+
+</table>
+
+
+
+{% endblock %}

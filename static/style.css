@@ -2,6 +2,7 @@
 body {
     background: linear-gradient(#6699ff, #ffb3ff);
     background-repeat: no-repeat;
+    background-size: 100% 100vh;
     height: auto;
     display: grid;
     grid-template-columns: repeat(6,1fr);
@@ -47,6 +48,9 @@ td{
 }
 tr:nth-child(2n){
     background-color: rgb(196, 196, 196);
+}
+th{
+    border-right: solid black 1px;
 }
 a{
     text-decoration: none;
