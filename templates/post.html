@@ -1,0 +1,22 @@
+{% extends "_layout.html" %}
+
+{% block content %}
+
+<h1> hi</h1>
+<form method="POST" enctype="multipart/form-data">
+    <input name="userid" type="hidden" value="{{ session['id']}}">
+    <label> Image</label>
+    <input name="image" type="file">
+    <br>
+    <label> Header</label>
+    <input name="header">
+    <br>
+    <label>Description</label>
+    <input name="description">
+    <br>
+    <button type="submit">Post</button>
+    <br>
+    
+</form>
+
+{% endblock %}

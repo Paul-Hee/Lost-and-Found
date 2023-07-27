@@ -19,7 +19,7 @@
     </tr>
 {% for lost_row in lost_results %}
     <tr class="lost">
-        <td>{{ lost_row["image"] }}</td>
+        <td><img src="{{ lost_row['image']}}" height="25rem"></td>
         <td>{{ lost_row["header"] }}</td>
         <td>{{ lost_row["description"] }}</td>
         <td>{{ lost_row["first_name"] }}</td>

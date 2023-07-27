@@ -64,7 +64,6 @@ def home():
 @app.route("/view")
 def view():
     if not can_access(request.args["id"]):
-        flash("You don't have permission to do that!")
         return redirect("/")
     
     else:
@@ -82,7 +81,6 @@ def view():
 def user():
     
     if not "logged_in" in session:
-        flash("You are not logged in")
         return redirect("/")    
     if 'admin' in session["role"]:
         with create_connection() as connection:
@@ -102,6 +100,16 @@ def signup():
     if request.method == "POST":
         with create_connection() as connection:
             with connection.cursor() as cursor:
+                
+            
+                sql_check_email = "SELECT * FROM users WHERE email = %s"
+                cursor.execute(sql_check_email, request.form["email"])
+                email_exists = cursor.fetchone()
+
+                if email_exists:
+                    # Flash a custom error message if the email is already registered
+                    flash("Email already exists. Please use a different email.")
+                    return redirect("/signup")
 
                 profile = request.files["profile"]
                 if not profile:
@@ -113,7 +121,7 @@ def signup():
                     
                 password = request.form["password"]
                 encrypted_password = hashlib.sha256(password.encode()).hexdigest()
-                print(encrypted_password)
+                
 
                 sql = """INSERT INTO users (first_name, last_name, email, password, profile)
                 VALUES (%s, %s, %s, %s, %s)"""
@@ -186,11 +194,10 @@ def update():
             with connection.cursor() as cursor:
                 
                 profile = request.files["profile"]
-                
-                
                 password = request.form["password"]
+
                 if password: 
-                    encrypted_password = hashlib.sha256(password.encode()).hexdigest
+                    encrypted_password = hashlib.sha256(password.encode()).hexdigest()
                 else:
                     encrypted_password = request.form["old_password"]
 
@@ -259,14 +266,14 @@ def lost():
                 cursor.execute(sql)
                 lost_results = cursor.fetchall()
 
-            return render_template("posts.html", lost_results=lost_results)
+            return render_template("lostadmin.html", lost_results=lost_results)
     
 
 @app.route("/deletepost")
 def deletepost():
     if not can_accesslost(request.args.get("id"), session.get("id")):
         flash("You don't have permission to do that!")
-        return redirect("/")
+        
 
     with create_connection() as connection:
         with connection.cursor() as cursor:
@@ -341,5 +348,34 @@ def viewpost():
             
             return render_template("viewpost.html", lost_result=lost_result)
 
+@app.route("/post", methods=["GET", "POST"])
+def post():
+    if not "logged_in" in session:
+        return redirect("/")
+    if request.method == "POST":
+        with create_connection() as connection:
+            with connection.cursor() as cursor:
+
+                image = request.files["image"]
+                if not image:
+                    image_path = "static/images/profile.png"
+                else:
+                    ext = os.path.splitext(image.filename)[1]
+                    image_path = "static/images/" + str(uuid.uuid4())[:8] + ext
+                    image.save(image_path)
+
+                sql = """INSERT INTO losts (image, header, description, userid)
+                VALUES (%s, %s, %s, %s)"""
+                values = (
+                    image_path,
+                    request.form["header"],
+                    request.form["description"],
+                    request.form["userid"]
+                )
+                cursor.execute(sql, values)
+                connection.commit()
+        return redirect("/")
+    else:
+        return render_template("post.html")
 
 app.run(debug=True)

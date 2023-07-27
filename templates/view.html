@@ -4,11 +4,11 @@
 <table class="Table">
     
     <tr>
-        <th> ID </th>
         <th> Image </th>
         <th> First name </th>
         <th> Last name</th>
         <th> Email </th>
+        <th>Actions</th>
        
     </tr>
     <tr>
@@ -17,11 +17,12 @@
         <td>{{ session['first_name']}}</td>
         <td>{{ session['last_name']}}</td>
         <td><a href="mailto:{{ session['email']}}"> {{ session['email']}}</a></td>
+        <td><a href="/update?id={{ session['id']}}">Edit</a></td>
     </tr>
 
 </table>
-<a href="/" class="homelink"> Home page</a>
-<a href="/update?id={{ session['id']}}">Edit</a>
+
+
 
 
 {% endblock %}  

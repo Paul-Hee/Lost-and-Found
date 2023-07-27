@@ -1,4 +1,7 @@
-
+* {
+    margin: 0;
+    padding: 0;
+}
 body {
     background: linear-gradient(#6699ff, #ffb3ff);
     background-repeat: no-repeat;
@@ -6,16 +9,89 @@ body {
     height: auto;
     display: grid;
     grid-template-columns: repeat(6,1fr);
-    
-    
     align-content: center;
     text-align: center;
     font-size:1.5em;
     justify-content: center;
 }
+
+
+.navbar{
+    grid-row: 1/2;
+    text-align: center;
+    grid-column: 1/7;
+    background: linear-gradient(#66ffcc, #33ccff);
+    border: black solid 2px;
+    border-radius: 5px;
+    display: grid;
+    grid-template-columns: repeat(18,1fr);
+}
+.navbar a{
+    border-right: black solid 2px;
+    margin: 1vh 0;
+    padding-top: 1vh;
+    height: 3rem;
+    font-size: 1.5rem;
+}
+.home-logo{
+    grid-column: 1/2;
+    padding: 0.5vh 0!important;    
+}
+
+.logo{
+    height:5vh;
+    transition:  .5s;
+}
+.logo:hover{
+    height: 6vh;
+}
+.lost{
+    grid-column: 2/4;
+}
+.post{
+    grid-column: 4/6;
+}
+.logout{
+    grid-column: 15/17;
+}
+.user{
+    grid-column: 17/19;
+}
+.login{
+    grid-column: 15/17;
+}
+.signup{
+    grid-column: 17/19;
+}
+
+
+
+
+.logged-in{
+    grid-row: 2/3;
+    grid-column: 6/7;
+    margin: 1rem;
+    padding: 0.5rem;
+    font-weight: bold;
+    background-color: rgb(102, 255, 204, 0.5);
+    border: black solid 2px;
+    border-radius: 1rem;
+}
+.message{
+    grid-row: 2/3;
+    grid-column: 5/6;
+    margin: 1rem;
+    padding: 0.5rem;
+    font-weight: bold;
+    background-color: rgb(102, 255, 204, 0.5);
+    border: black solid 2px;
+    border-radius: 1rem;
+
+}
+
 .heading {
     
-    grid-row: 1/2;
+    grid-row: 3/4;
     grid-column: 1/7;
     font-size: 3rem;
     transition:  1s;
@@ -23,11 +99,6 @@ body {
 .heading:hover{
     font-size: 4rem;
     color: rgb(000,000, 000,0.6);
-}
-.navbar{
-    grid-row: 2/3;
-    text-align: center;
-    grid-column: 1/7;
 }
 
 .Table{
@@ -61,12 +132,4 @@ a{
 a:hover{
     font-size: 1.6rem;
     color: #cc33ff;
-}
-.signuplink{
-    grid-row: 3/4;
-    grid-column: 1/4;
-}
-.loginlink{
-    grid-row: 3/4;
-    grid-column: 4/7;
 }
