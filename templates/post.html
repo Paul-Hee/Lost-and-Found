@@ -2,17 +2,22 @@
 
 {% block content %}
 
-<h1> hi</h1>
+<h1 class="heading"> Post new thing found</h1>
 <form method="POST" enctype="multipart/form-data">
     <input name="userid" type="hidden" value="{{ session['id']}}">
-    <label> Image</label>
-    <input name="image" type="file">
+    <label class="post-lable-img" for="inputTag"> 
+        Select image<br>
+        <i class="fa fa-2x fa-camera"></i>
+        <input name="image" type="file" class="post-image" id="inputTag"> 
+        <br>
+        <span id="imageName"></span>
+    </label>
     <br>
     <label> Header</label>
-    <input name="header">
+    <input name="header" class="post-header" maxlength="35" required>
     <br>
     <label>Description</label>
-    <input name="description">
+    <textarea name="description" class="post-descrip" maxlength="985"></textarea>
     <br>
     <button type="submit">Post</button>
     <br>

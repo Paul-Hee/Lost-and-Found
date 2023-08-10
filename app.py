@@ -64,7 +64,8 @@ def home():
 @app.route("/view")
 def view():
     if not can_access(request.args["id"]):
-        return redirect("/")
+        flash("Please log in")
+        return redirect(request.referrer or "/")   
     
     else:
         with create_connection() as connection:
@@ -81,19 +82,20 @@ def view():
 def user():
     
     if not "logged_in" in session:
-        return redirect("/")    
+        flash("Please log in")
+        return redirect(request.referrer or "/")   
+        
     if 'admin' in session["role"]:
         with create_connection() as connection:
             with connection.cursor() as cursor:
                 sql = "SELECT * FROM users"
                 cursor.execute(sql)
                 result = cursor.fetchall()
-                print(result)
         return render_template("user.html", result=result)
     else:
         
         with create_connection() as connection:
-                return render_template("view.html",)
+                return render_template("view.html")
     
 @app.route("/signup", methods=["GET", "POST"])
 def signup():
@@ -174,7 +176,7 @@ def logout():
 def delete():
     if not can_access(request.args["id"]):
         flash("You don't have permission to do that!")
-        return redirect("/")
+        return redirect(request.referrer or "/")
 
     with create_connection() as connection:
         with connection.cursor() as cursor:
@@ -188,7 +190,8 @@ def delete():
 def update():
     if not can_access(request.args["id"]):
         flash("You don't have permission to do that!")
-        return redirect("/")
+        return redirect(request.referrer or "/")
+    
     if request.method == "POST":
         with create_connection() as connection:
             with connection.cursor() as cursor:
@@ -227,7 +230,7 @@ def update():
                     )
                 cursor.execute(sql, values)
                 connection.commit()
-        return redirect("/")
+        return redirect("/logout")
     else:
         with create_connection() as connection:
             with connection.cursor() as cursor:
@@ -273,7 +276,7 @@ def lost():
 def deletepost():
     if not can_accesslost(request.args.get("id"), session.get("id")):
         flash("You don't have permission to do that!")
-        
+        return redirect(request.referrer or "/")
 
     with create_connection() as connection:
         with connection.cursor() as cursor:
@@ -291,7 +294,8 @@ def updatepost():
 
     if not can_accesslost(post_id, session_user_id):
         flash("You don't have permission to do that!")
-        return redirect("/")
+        return redirect(request.referrer or "/")
+
     if request.method == "POST":
         with create_connection() as connection:
             with connection.cursor() as cursor:
@@ -351,7 +355,9 @@ def viewpost():
 @app.route("/post", methods=["GET", "POST"])
 def post():
     if not "logged_in" in session:
-        return redirect("/")
+        flash("Please log in")
+        return redirect(request.referrer or "/")
+
     if request.method == "POST":
         with create_connection() as connection:
             with connection.cursor() as cursor:
@@ -363,7 +369,7 @@ def post():
                     ext = os.path.splitext(image.filename)[1]
                     image_path = "static/images/" + str(uuid.uuid4())[:8] + ext
                     image.save(image_path)
-
+                
                 sql = """INSERT INTO losts (image, header, description, userid)
                 VALUES (%s, %s, %s, %s)"""
                 values = (

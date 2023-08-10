@@ -1,39 +1,22 @@
 {% extends "_layout.html" %}
 {% block content %}
-<h1 class="heading">Hello Pakuranga</h1>
-<table class="Table">
-    <colgroup>
-        <col>
-        <col>
-        <col>
-    </colgroup>
-    <tr>
-        <th>image</th>
-        <th>header</th>
-        <th>description</th>
+<h1 class="heading">Losts</h1>
 
-        <th> First name </th>
-        <th> Last name</th>
-        <th> Email </th>
-        <th> Actions</th>
-    </tr>
+
+<div class="lost-container">
 {% for lost_row in lost_results %}
-    <tr class="lost">
-        <td><img src="{{ lost_row['image']}}" height="25rem"></td>
-        <td>{{ lost_row["header"] }}</td>
-        <td>{{ lost_row["description"] }}</td>
-        <td>{{ lost_row["first_name"] }}</td>
-        <td>{{ lost_row["last_name"] }}</td>
-        <td><a href="mailto:{{ lost_row["email"] }}">{{ lost_row["email"] }}</a></td>
-        <td>
-
+<div class="lost-things">
+    
+    <div class="lost-image"><img src="{{ lost_row['image']}}" class="img-lost"></div>
+        <div class="lost-header">{{ lost_row["header"] }}</div>
+        <div class="lost-descrip">{{ lost_row["description"] }}</div>
+        <div class="lost-name">{{ lost_row["first_name"] }} {{ lost_row["last_name"] }}</div>
+        <div class="lost-mail"><a href="mailto:{{ lost_row["email"] }}">{{ lost_row["email"] }}</a></div>
+        <div class="lost-view">
             <a href="/viewpost?id={{ lost_row['id'] }}">View</a>
-        </td>
-    </tr>
+        </div>
+        
+</div>
 {% endfor %}
-
-</table>
-
-
-
+</div>
 {% endblock %}

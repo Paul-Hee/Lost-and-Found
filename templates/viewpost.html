@@ -1,33 +1,31 @@
 {% extends "_layout.html" %}
 {% block content %}
-<h1 class="heading">Hello Pakuranga</h1>
-<table class="Table">
-    
-    <tr>
-        
-        <th> Image </th>
-        <th>header</th>
-        <th>description</th>
-        
-        <th> First name </th>
-        <th> Last name</th>
-        <th> Email </th>
-       
-    </tr>
-    <tr>
-        <td><img src="{{ lost_result['image']}}" height="25rem"></td>
-        <td>{{ lost_result['header']}}</td>
-        <td>{{ lost_result['description']}}</td>
-        
-        <td>{{ lost_result['first_name']}}</td>
-        <td>{{ lost_result['last_name']}}</td>
-        <td><a href="mailto:{{ lost_result['email']}}"> {{ lost_result['email']}}</a></td>
-    </tr>
+<h1 class="heading">{{ lost_result["header"] }}</h1>
 
-</table>
 
-<a href="/updatepost?id={{ lost_result['id']}}">Edit</a>
-<a href="/deletepost?id={{ lost_result['id'] }}" onclick="return confirm('Are you sure you want to delete {{ lost_result["header"] }}?')">Delete</a>
+<div class="lost-container">
+    <div class="lost-things">
+        
+        <div class="lost-image"><img src="{{ lost_result['image']}}" class="lost-view-image" onclick="onClick(this)"" class="img-lost"></div>
+            
+            <div class="view-lost-descrip">{{ lost_result["description"] }}</div>
+            <div class="lost-name"><b>Posted by: </b>{{ lost_result["first_name"] }} {{ lost_result["last_name"] }}</div>
+            <div class="lost-mail"><b> Please email: </b><a href="mailto:{{ lost_result["email"] }}">{{ lost_result["email"] }}</a></div>
+            <div class="lost-view">
+                <a href="/updatepost?id={{ lost_result['id']}}">Edit</a>
+                <a href="/deletepost?id={{ lost_result['id'] }}" onclick="return confirm('Are you sure you want to delete {{ lost_result["header"] }}?')">Delete</a>
+                
+            </div>
+            
+    </div>
+</div>
 
+
+<div id="modal01" class="w3-modal" onclick="this.style.display='none'">
+    <span class="w3-display-topright">&times;</span>
+    <div class="w3-modal-content w3-animate-zoom">
+      <img id="img01" style="width:100%">
+    </div>
+  </div>
 
 {% endblock %}  

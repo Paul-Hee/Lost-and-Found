@@ -4,6 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="static/style.css" />
+    <script src="https://use.fontawesome.com/3a2eaf6206.js"></script>
 
     <title> Pakuranga lost & found</title>
 
@@ -34,5 +35,19 @@
     {% endfor %}
     {% block content %}
     {% endblock %}
+    <script>
+        let input = document.getElementById("inputTag");
+        let imageName = document.getElementById("imageName")
+
+        input.addEventListener("change", ()=>{
+            let inputImage = document.querySelector("input[type=file]").files[0];
+
+            imageName.innerText = inputImage.name;
+        })
+        function onClick(element) {
+            document.getElementById("img01").src = element.src;
+            document.getElementById("modal01").style.display = "block";
+}
+    </script>
 </body>
 </html>

@@ -1,25 +1,42 @@
 {% extends "_layout.html" %}
 
 {% block content %}
-
-<h1> hi</h1>
-<form method="POST" enctype="multipart/form-data">
+<h1 class="heading"> Sign up</h1>
+<form method="POST" enctype="multipart/form-data" class="form">
+    
+        <label class="profile-img" for="inputTag"> 
+            Select profile image<br>
+            <i class="fa fa-2x fa-camera"></i>
+            <input name="profile" type="file" class="profile-image" id="inputTag"> 
+            <br>
+            <span id="imageName"></span>
+        </label>
+    
+    <br>
+    
     <label> First Name</label>
+    <br>
     <input name="first_name">
+   
     <br>
-    <label> Last Name</label>
+   
+    <label> Last Name</label><br>
     <input name="last_name">
+   
     <br>
-    <label> Email</label>
+   
+    <label> Email</label><br>
     <input name="email" type="email">
+ 
     <br>
-    <label> Password</label>
+   
+    <label> Password</label><br>
     <input name="password" type="password">
+  
     <br>
     <button type="submit">Sign up</button>
-    <br>
-    <label> Profile Picture</label>
-    <input name="profile" type="file">
+    
+    
 </form>
 
 {% endblock %}

@@ -1,7 +1,7 @@
 {% extends "_layout.html" %}
 {% block content %}
-<h1 class="heading">Hello Pakuranga</h1>
-<table class="Table">
+<h1 class="heading">My details</h1>
+<table class="Table view-user">
     
     <tr>
         <th> Image </th>
@@ -13,7 +13,7 @@
     </tr>
     <tr>
         
-        <td><img src="{{ session['profile']}}" height="25rem"></td>
+        <td><img src="{{ session['profile']}}" class="view-image" onclick="onClick(this)"></td>
         <td>{{ session['first_name']}}</td>
         <td>{{ session['last_name']}}</td>
         <td><a href="mailto:{{ session['email']}}"> {{ session['email']}}</a></td>
@@ -22,7 +22,12 @@
 
 </table>
 
-
+<div id="modal01" class="w3-modal" onclick="this.style.display='none'">
+    <span class="w3-display-topright">&times;</span>
+    <div class="w3-modal-content w3-animate-zoom">
+      <img id="img01" style="width:100%">
+    </div>
+  </div>
 
 
 {% endblock %}  

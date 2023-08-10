@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<h1> hi</h1>
+<h1 class="heading"> Update my details</h1>
 <form method="POST" enctype="multipart/form-data">
     <input name="id" type="hidden" value="{{ result['id']}}">
     <input name="old_password" type="hidden" value="{{ result['password']}}">
@@ -23,7 +23,14 @@
     <input name="password" type="password">
     <br>
     <label> Profile Picture</label>
-    <input name="profile" type="file">
+
+    <label class="update-profile" for="inputTag"> 
+        Select image<br>
+        <i class="fa fa-2x fa-camera"></i>
+        <input name="profile" type="file" class="profile-image" id="inputTag"> 
+        <br>
+        <span id="imageName"></span>
+    </label>
     <button type="submit">Update</button>
 </form>
 
