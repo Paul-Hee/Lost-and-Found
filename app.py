@@ -5,9 +5,13 @@ import hashlib
 import uuid
 import os
 
-from flask import Flask, render_template, request, redirect, session, flash
+from flask import Flask, render_template, request, redirect, session, flash, abort
 app = Flask(__name__)
 app.secret_key = "any-random-string-reshrdjtfkygluvchfjkhlbh"
+
+@app.errorhandler(404)
+def not_found_error(error):
+    return render_template("404.html")
 
 def encrypt(password):
     return hashlib.sha256(password.encode()).hexdigest()
@@ -63,9 +67,14 @@ def home():
 
 @app.route("/view")
 def view():
-    if not can_access(request.args["id"]):
+    try:
+        id = request.args["id"]
+    except KeyError:
         flash("Please log in")
-        return redirect(request.referrer or "/")   
+        return redirect((request.referrer or "/") if request.referrer != "404.html" else "/")
+    if not can_access(id):
+        flash("Please log in")
+        return redirect((request.referrer or "/") if request.referrer != "404.html" else "/")  
     
     else:
         with create_connection() as connection:
@@ -83,7 +92,7 @@ def user():
     
     if not "logged_in" in session:
         flash("Please log in")
-        return redirect(request.referrer or "/")   
+        return redirect((request.referrer or "/") if request.referrer != "404.html" else "/")  
         
     if 'admin' in session["role"]:
         with create_connection() as connection:
@@ -174,9 +183,13 @@ def logout():
 
 @app.route("/delete")
 def delete():
-    if not can_access(request.args["id"]):
+    try:
+        id = request.args["id"]
+    except KeyError:
+        return abort(404)
+    if not can_access(id):
         flash("You don't have permission to do that!")
-        return redirect(request.referrer or "/")
+        return redirect((request.referrer or "/") if request.referrer != "404.html" else "/")
 
     with create_connection() as connection:
         with connection.cursor() as cursor:
@@ -190,7 +203,7 @@ def delete():
 def update():
     if not can_access(request.args["id"]):
         flash("You don't have permission to do that!")
-        return redirect(request.referrer or "/")
+        return redirect((request.referrer or "/") if request.referrer != "404.html" else "/")
     
     if request.method == "POST":
         with create_connection() as connection:
@@ -274,9 +287,14 @@ def lost():
 
 @app.route("/deletepost")
 def deletepost():
-    if not can_accesslost(request.args.get("id"), session.get("id")):
+    try:
+        post_id = request.args["id"]
+        session_id = session.get("id")
+    except KeyError:
+        return abort(404)
+    if not can_accesslost(post_id, session_id):
         flash("You don't have permission to do that!")
-        return redirect(request.referrer or "/")
+        return redirect((request.referrer or "/") if request.referrer != "404.html" else "/")
 
     with create_connection() as connection:
         with connection.cursor() as cursor:
@@ -294,7 +312,7 @@ def updatepost():
 
     if not can_accesslost(post_id, session_user_id):
         flash("You don't have permission to do that!")
-        return redirect(request.referrer or "/")
+        return redirect((request.referrer or "/") if request.referrer != "404.html" else "/")
 
     if request.method == "POST":
         with create_connection() as connection:
@@ -336,6 +354,10 @@ def updatepost():
 
 @app.route("/viewpost")
 def viewpost():
+    try:
+        post_id = int(request.args.get("id"))
+    except (ValueError, TypeError):
+        return abort(404)
     with create_connection() as connection:
         with connection.cursor() as cursor:
             sql1 = """
@@ -345,18 +367,20 @@ def viewpost():
             WHERE losts.id = %(id)s
             """
             values1 = {
-                "id": request.args["id"]
+                "id": post_id
             }
             cursor.execute(sql1, values1)
             lost_result = cursor.fetchone()
-            
+            if lost_result is None:
+                return render_template("404.html")
+                
             return render_template("viewpost.html", lost_result=lost_result)
 
 @app.route("/post", methods=["GET", "POST"])
 def post():
     if not "logged_in" in session:
         flash("Please log in")
-        return redirect(request.referrer or "/")
+        return redirect((request.referrer or "/") if request.referrer != "404.html" else "/")
 
     if request.method == "POST":
         with create_connection() as connection:

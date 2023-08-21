@@ -14,8 +14,8 @@
         <div class="lost-name">{{ lost_row["first_name"] }} {{ lost_row["last_name"] }}</div>
         <div class="lost-mail"><a href="mailto:{{ lost_row["email"] }}">{{ lost_row["email"] }}</a></div>
         <div class="lost-view">
-            <a href="/viewpost?id={{ lost_row['id'] }}">View</a>
-            <a href="/updatepost?id={{ lost_row['id'] }}">Edit</a>
+            <a href="/viewpost?id={{ lost_row['id'] }}">View     </a>
+            <a href="/updatepost?id={{ lost_row['id'] }}">Edit     </a>
             <a href="/deletepost?id={{ lost_row['id'] }}" onclick="return confirm('Are you sure you want to delete {{ lost_row["header"] }}?')">Delete</a>
         </div>
         

@@ -18,10 +18,10 @@
     </label>
     <br>
     <label> Header</label>
-    <input name="header" value="{{ result['header']}}">
+    <input name="header" value="{{ result['header']}}" required>
     <br>
     <label> Description</label>
-    <textarea name="description" class="post-descrip" maxlength="985" placeholder="{{ result['description']}}"></textarea>
+    <textarea name="description" class="post-descrip" maxlength="985" placeholder="{{ result['description']}}" required></textarea>
     <br>
     
     <button type="submit">Update</button>

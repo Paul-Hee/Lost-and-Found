@@ -6,13 +6,13 @@
 <div class="lost-container">
     <div class="lost-things">
         
-        <div class="lost-image"><img src="{{ lost_result['image']}}" class="lost-view-image" onclick="onClick(this)"" class="img-lost"></div>
+        <div class="view-lost-image"><img src="{{ lost_result['image']}}" class="lost-view-image" onclick="onClick(this)"" class="img-lost"></div>
             
             <div class="view-lost-descrip">{{ lost_result["description"] }}</div>
             <div class="lost-name"><b>Posted by: </b>{{ lost_result["first_name"] }} {{ lost_result["last_name"] }}</div>
             <div class="lost-mail"><b> Please email: </b><a href="mailto:{{ lost_result["email"] }}">{{ lost_result["email"] }}</a></div>
             <div class="lost-view">
-                <a href="/updatepost?id={{ lost_result['id']}}">Edit</a>
+                <a href="/updatepost?id={{ lost_result['id']}}">Edit      </a> 
                 <a href="/deletepost?id={{ lost_result['id'] }}" onclick="return confirm('Are you sure you want to delete {{ lost_result["header"] }}?')">Delete</a>
                 
             </div>

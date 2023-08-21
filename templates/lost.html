@@ -4,7 +4,7 @@
 
 
 <div class="lost-container">
-{% for lost_row in lost_results %}
+{% for lost_row in lost_results[::-1] %}
 <div class="lost-things">
     
     <div class="lost-image"><img src="{{ lost_row['image']}}" class="img-lost"></div>
