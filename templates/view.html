@@ -14,11 +14,11 @@
     </tr>
     <tr>
         
-        <td><img src="{{ session['profile']}}" class="view-image" onclick="onClick(this)"></td>
-        <td>{{ session['first_name']}}</td>
-        <td>{{ session['last_name']}}</td>
-        <td><a href="mailto:{{ session['email']}}"> {{ session['email']}}</a></td>
-        <td><a href="/update?id={{ session['id']}}">Edit</a></td>
+        <td><img src="{{ result['profile']}}" class="view-image" onclick="onClick(this)"></td>
+        <td>{{ result['first_name']}}</td>
+        <td>{{ result['last_name']}}</td>
+        <td><a href="mailto:{{ result['email']}}"> {{ result['email']}}</a></td>
+        <td><a href="/update?id={{ result['id']}}">Edit</a></td>
     </tr>
 
 </table>

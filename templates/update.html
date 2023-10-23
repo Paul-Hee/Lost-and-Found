@@ -11,16 +11,16 @@
     <br>
     
     <label> First Name</label>
-    <input name="first_name" value="{{ result['first_name']}}" required>
+    <input name="first_name" value="{{ result['first_name']}}" maxlength="20" required>
     <br>
     <label> Last Name</label>
-    <input name="last_name" value="{{ result['last_name']}}" required>
+    <input name="last_name" value="{{ result['last_name']}}" maxlength="20" required>
     <br>
     <label> Email</label>
-    <input name="email" type="email" value="{{ result['email']}}" required>
+    <input name="email" type="email" value="{{ result['email']}}" maxlength="35" required>
     <br>
     <label> Password</label>
-    <input name="password" type="password" >
+    <input name="password" type="password"  maxlength="50" >
     <br>
     <label> Profile Picture</label>
 

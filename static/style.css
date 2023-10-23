@@ -95,16 +95,12 @@ body {
 .heading {
     grid-row: 4/5;
     grid-column: 1/7;
-    font-size: 3rem;
-    transition:  1s;
+    font-size: 3.5rem;
     height: 10rem;
     margin-top: 3rem;
     user-select: none;
 }
-.heading:hover{
-    font-size: 4rem;
-    color: rgb(000,000, 000,0.6);
-}
+
 .home-text{
     grid-row: 5/6;
     grid-column: 1/7;
@@ -231,126 +227,6 @@ div input{
 }
 
 
-@media screen and (max-width: 992px) {
-    .navbar a{
-        padding: 0;
-    }
-    
-    a{
-        font-size: 1rem!important;
-        word-wrap:normal;
-    }
-    .home-logo{
-        grid-column: 1/4;
-    }
-    .lost{
-        grid-column: 4/7;
-    }
-    .post{
-        grid-column: 7/10;
-    }
-    .logout{
-        grid-column: 13/16;
-    }
-    .user{
-        grid-column: 16/19;
-    }
-    .login{
-        grid-column: 13/16;
-    }
-    .signup{
-        grid-column: 16/19;
-    }
-    div.logged-in{
-        grid-column: 1/7;
-    }
-    p.message{
-        grid-row: 3/4;
-        grid-column: 1/7;
-        margin-top: 0;
-    }
-    a:hover{
-        font-size: 1.1rem!important; 
-    }
-    h1.heading{
-        font-size: 2rem;
-    }
-    h1.heading:hover{
-        font-size: 2.5rem;
-    }  
-    p.home-text{
-        font-size: 1.3rem;
-    }
-    table.Table{
-        font-size: 1rem;
-    }
-
-    form{
-        padding: 0 0 2rem 0!important;
-        margin: 0 2rem 3rem 2rem!important;
-        grid-column: 1/7!important;
-    }
-    
-    form label{
-        font-weight: bold;
-        font-size: 1.5rem;
-        margin-top: 2rem;
-    }
-    form input{
-        margin: 1rem 0!important;
-    }
-    textarea.post-descrip{
-        margin: 3rem 5rem;
-    }
-    div.lost-things{
-        grid-template-rows: none;
-        margin: 0 5vw 10vh 5vw;
-        padding: 10vw 1vw 1vw 1vw;
-        border-radius: 5vw;
-    }
-
-    
-    div.lost-header{
-        grid-area: 1/1/2/7;
-        font-size: 2rem;
-    }
-    div.lost-image{
-        grid-area: 2/1/4/7;
-        border-right: none;
-    }
-
-    div.lost-descrip{
-        grid-area: 4/1/5/7;
-        font-size: 1rem;
-    }
-    div.lost-name{
-        grid-area: 5/1/6/7;
-        border-bottom: solid black 2px;
-        border-right: none;
-        font-size: 1rem;
-    }
-    div.lost-mail{
-        grid-area: 6/1/7/5;
-        font-size: 1rem;
-    }
-    div.lost-view{
-        grid-area: 6/5/7/7;
-        margin-bottom: 3rem;
-        font-size: 0.5vw;
-    }
-    div.view-lost-descrip{
-        grid-area: 4/1/5/7;
-        font-size: 1rem;
-    }
-    div.view-lost-image{
-        grid-area: 2/1/4/7;
-        border-right: none;
-        height: 25rem;
-        padding: 0;
-    }
-    .
-}
-
 
 /*lost */
 .lost-container{
@@ -427,10 +303,47 @@ div input{
 }
 
 
-.w3-modal{z-index:3;display:none;padding-top:100px;position:fixed;left:0;top:0;width:100%;height:100%;overflow:auto;background-color:rgb(0,0,0);background-color:rgba(0,0,0,0.4)}
-.w3-modal-content{margin:auto;background-color:#fff;position:relative;padding:0;outline:0;width:600px}
-.w3-animate-zoom {animation:animatezoom 0.6s}@keyframes animatezoom{from{transform:scale(0)} to{transform:scale(1)}}
-.w3-display-topright{position:absolute;right:0;top:0; background-color: rgb(0,0,0,0.5); cursor: pointer; height: 3rem; width: 3rem; margin: 3rem;}
+.w3-modal{
+    z-index:3;
+    display:none;
+    padding-top:100px;
+    position:fixed;
+    left:0;
+    top:0;
+    width:100%;
+    height:100%;
+    overflow:auto;
+    background-color:rgb(0,0,0);
+    background-color:rgba(0,0,0,0.4)
+}
+.w3-modal-content{
+    margin:auto;
+    background-color:#fff;
+    position:relative;
+    padding:0;
+    outline:0;
+    width:600px
+}
+.w3-animate-zoom {
+    animation:animatezoom 0.6s
+}
+@keyframes animatezoom{
+    from{
+        transform:scale(0)
+    } 
+    to{
+        transform:scale(1)
+    }
+}
+.w3-display-topright{
+    position:absolute;
+    right:0;
+    top:0;
+    background-color: rgb(0,0,0,0.5); 
+    cursor: pointer; 
+    height: 3rem; 
+    width: 3rem; 
+    margin: 3rem;}
 
 .error{
     grid-row: 5/6;
@@ -438,3 +351,121 @@ div input{
     text-align: center;
 }
 
+
+@media screen and (max-width: 992px) {
+    .navbar a{
+        padding: 0;
+    }
+    
+    a{
+        font-size: 1rem!important;
+        word-wrap:normal;
+    }
+    .home-logo{
+        grid-column: 1/4;
+    }
+    .lost{
+        grid-column: 4/7;
+    }
+    .post{
+        grid-column: 7/10;
+    }
+    .logout{
+        grid-column: 13/16;
+    }
+    .user{
+        grid-column: 16/19;
+    }
+    .login{
+        grid-column: 13/16;
+    }
+    .signup{
+        grid-column: 16/19;
+    }
+    div.logged-in{
+        grid-column: 1/7;
+    }
+    p.message{
+        grid-row: 3/4;
+        grid-column: 1/7;
+        margin-top: 0;
+    }
+    a:hover{
+        font-size: 1.1rem!important; 
+    }
+    h1.heading{
+        font-size: 2rem;
+    }
+     
+    p.home-text{
+        font-size: 1.3rem;
+    }
+    table.Table{
+        font-size: 1rem;
+    }
+
+    form{
+        padding: 0 0 2rem 0!important;
+        margin: 0 2rem 3rem 2rem!important;
+        grid-column: 1/7!important;
+    }
+    
+    form label{
+        font-weight: bold;
+        font-size: 1.5rem;
+        margin-top: 2rem;
+    }
+    form input{
+        margin: 1rem 0!important;
+    }
+    textarea.post-descrip{
+        margin: 3rem 5rem;
+    }
+    div.lost-things{
+        grid-template-rows: none;
+        margin: 0 5vw 10vh 5vw;
+        padding: 10vw 1vw 1vw 1vw;
+        border-radius: 5vw;
+    }
+
+    
+    div.lost-header{
+        grid-area: 1/1/2/7;
+        font-size: 2rem;
+    }
+    div.lost-image{
+        grid-area: 2/1/4/7;
+        border-right: none;
+    }
+
+    div.lost-descrip{
+        grid-area: 4/1/5/7;
+        font-size: 1rem;
+    }
+    div.lost-name{
+        grid-area: 5/1/6/7;
+        border-bottom: solid black 2px;
+        border-right: none;
+        font-size: 1rem;
+    }
+    div.lost-mail{
+        grid-area: 6/1/7/5;
+        font-size: 1rem;
+    }
+    div.lost-view{
+        grid-area: 6/5/7/7;
+        margin-bottom: 3rem;
+        font-size: 0.5vw;
+    }
+    div.view-lost-descrip{
+        grid-area: 4/1/5/7;
+        font-size: 1rem;
+    }
+    div.view-lost-image{
+        grid-area: 2/1/4/7;
+        border-right: none;
+        height: 25rem;
+        padding: 0;
+    }
+    
+}

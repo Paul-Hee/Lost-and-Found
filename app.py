@@ -67,11 +67,18 @@ def home():
 
 @app.route("/view")
 def view():
-    try:
-        id = request.args["id"]
-    except KeyError:
-        flash("Please log in")
-        return redirect((request.referrer or "/") if request.referrer != "404.html" else "/")
+    if session["role"] == "admin":
+        try:
+            id = request.args["id"]
+        except KeyError:
+            flash("Please log in")
+            return redirect((request.referrer or "/") if request.referrer != "404.html" else "/")
+    elif session["role"] == "user":
+        try:
+            id = session["id"]
+        except KeyError:
+            flash("Please log in")
+            return redirect((request.referrer or "/") if request.referrer != "404.html" else "/")
     if not can_access(id):
         flash("Please log in")
         return redirect((request.referrer or "/") if request.referrer != "404.html" else "/")  
@@ -81,7 +88,7 @@ def view():
             with connection.cursor() as cursor:
                 sql = "SELECT * FROM users WHERE id = %s"
                 values = (
-                    request.args["id"]
+                    id
                 )
                 cursor.execute(sql, values)
                 result = cursor.fetchone()
@@ -102,17 +109,13 @@ def user():
                 result = cursor.fetchall()
         return render_template("user.html", result=result)
     else:
-        
-        with create_connection() as connection:
-                return render_template("view.html")
+        return redirect("/view")
     
 @app.route("/signup", methods=["GET", "POST"])
 def signup():
     if request.method == "POST":
         with create_connection() as connection:
             with connection.cursor() as cursor:
-                
-            
                 sql_check_email = "SELECT * FROM users WHERE email = %s"
                 cursor.execute(sql_check_email, request.form["email"])
                 email_exists = cursor.fetchone()
