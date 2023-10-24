@@ -32,7 +32,7 @@ def create_connection():
 
 
 def can_access(id):
-    if "logged_in" in session:
+    if "logged_in" in session and id.isdigit():
         matching_id = session["id"] == int(id)
         is_admin = session["role"] == "admin"
 
@@ -50,7 +50,8 @@ def can_accesslost(post_id, session_user_id):
             result = cursor.fetchone()
 
             if not result:
-                return False  # The post doesn't exist
+                return False  
+            # The post doesn't exist
 
             post_user_id = result["userid"]
 
