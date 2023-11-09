@@ -8,7 +8,7 @@
 {% for lost_row in lost_results[::-1] %}
 <div class="lost-things">
     
-    <div class="lost-image"><img src="{{ lost_row['image']}}" class="img-lost"></div>
+    <div class="lost-image"><img src="{{ lost_row['image']}}" class="img-lost" alt="{{ lost_row["header"] }}"></div>
         <div class="lost-header">{{ lost_row["header"] }}</div>
         <div class="lost-descrip">{{ lost_row["description"] }}</div>
         <div class="lost-name">{{ lost_row["first_name"] }} {{ lost_row["last_name"] }}</div>

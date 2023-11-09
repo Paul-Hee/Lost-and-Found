@@ -207,7 +207,7 @@ def delete():
             connection.commit()
     return redirect("/user")
 
-# Update user's detil
+# Update user's detail
 @app.route("/update", methods=["GET", "POST"])
 def update():
     if not can_access(request.args["id"]):
@@ -225,7 +225,7 @@ def update():
                     encrypted_password = hashlib.sha256(password.encode()).hexdigest()
                 else:
                     encrypted_password = request.form["old_password"]
-                # If no password givin, the old password will be saved
+                # If no password given, the old password will be saved
                 if profile: 
                     ext = os.path.splitext(profile.filename)[1]
                     profile_path = "static/images/" + str(uuid.uuid4())[:8] + ext

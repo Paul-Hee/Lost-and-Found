@@ -6,7 +6,7 @@
 <div class="lost-container">
     <div class="lost-things">
         
-        <div class="view-lost-image"><img src="{{ lost_result['image']}}" class="lost-view-image" onclick="onClick(this)"" class="img-lost"></div>
+        <div class="view-lost-image"><img src="{{ lost_result['image']}}" class="lost-view-image" onclick="onClick(this)"" class="img-lost" alt="{{ lost_result["header"] }}"></div>
             
             <div class="view-lost-descrip">{{ lost_result["description"] }}</div>
             <div class="lost-name"><b>Posted by: </b>{{ lost_result["first_name"] }} {{ lost_result["last_name"] }}</div>
